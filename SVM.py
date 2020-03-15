@@ -7,7 +7,7 @@
 print('SVM on Wisconsin Brest Cancer Data')
 
 
-# In[32]:
+# In[41]:
 
 
 # Import required libraries
@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 get_ipython().run_line_magic('matplotlib', 'inline')
 
 
-# In[33]:
+# In[42]:
 
 
 #column names
@@ -32,10 +32,10 @@ wbcd.head()
 
 
 
-# In[22]:
+# In[36]:
 
 
-wbcd.shape
+wbcdReplacedData.head()
 
 
 # In[43]:
@@ -44,7 +44,7 @@ wbcd.shape
 wbcd.dtypes
 
 
-# In[34]:
+# In[43]:
 
 
 #split dataset in features and target variable
@@ -55,12 +55,13 @@ featuresReplacedData= wbcdReplacedData[feature_cols] # Features all data
 resultReplacedData = wbcdReplacedData.Class # Target variable all data
 
 
-# In[35]:
+# In[63]:
 
 
 # split X and y into training and teting sets
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(features, result, test_size = 0.35)
+X_train_, X_test_, y_train_, y_test_ = train_test_split(featuresReplacedData, resultReplacedData, test_size = 0.35)
 
 from sklearn.svm import SVC
 svclassifier = SVC(kernel='linear')
@@ -72,4 +73,14 @@ y_pred=svclassifier.predict(X_test)
 from sklearn.metrics import classification_report, confusion_matrix
 print(confusion_matrix(y_test,y_pred))
 print(classification_report(y_test,y_pred))
+
+
+# In[69]:
+
+
+svclassifier.fit(X_train_, y_train_)
+y_pred_=svclassifier.predict(X_test_)
+
+print(confusion_matrix(y_test_,y_pred_))
+print(classification_report(y_test_,y_pred_))
 
